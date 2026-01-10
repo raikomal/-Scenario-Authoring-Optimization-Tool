@@ -1,3 +1,4 @@
 Product,Module,Feature,Test Case,Description,Steps,Expected Result,Actual Result,Status,Remarks,Task ID
 Tower Track,Web,Login,Valid Login,Login with valid credentials,Enter username and password,User should login successfully,User logged in,Pass,,1
 Tower Track,Part Allocation Insights,Navigation,Navigate to Scenario Authoring Tool,Open Scenario Authoring & Optimization Tool,Click Scenario Authoring card,Page should open,Page opened,Pass,,2
+Tower Track,Part Allocation Insights,Scenario Authoring & Optimization Tool,Verify Page Load,Ensure Scenario Authoring page loads correctly,Open Scenario Authoring tool,Scenario Authoring page should load,Page loaded successfully,Pass,,3

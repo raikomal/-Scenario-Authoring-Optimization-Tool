@@ -53,3 +53,7 @@ def test_scenario_authoring_full_flow(driver):
         "Page loaded successfully",
         "Pass", "", task_id
     )
+    scenario_page = ScenarioAuthoringPage(driver)
+
+    scenario_page.validate_page_loaded()
+    scenario_page.configure_sc_network_and_generate()

@@ -1,2 +1,0 @@
-Product,Module,Feature,Test Case,Description,Steps,Expected Result,Actual Result,Status,Remarks,Task ID
-Tower Track,Web,Login,Valid Login,Login with valid credentials,Enter username and password,User should login successfully,User logged in,Pass,,1
