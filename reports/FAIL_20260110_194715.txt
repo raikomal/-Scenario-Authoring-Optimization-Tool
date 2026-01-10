@@ -1,0 +1,106 @@
+Test Failed: test_scenario_authoring_full_flow
+==============================================
+
+driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="d9787f1f92e79fb97758147d8917849b")>
+
+    @pytest.mark.e2e
+    def test_scenario_authoring_full_flow(driver):
+        """
+        Scenario Authoring & Optimization Tool – Entry Test
+        """
+    
+        # -------------------------------
+        # Login
+        # -------------------------------
+        login = LoginPage(driver)
+        login.login("user@gmail.com", "12345")
+    
+        # -------------------------------
+        # Navigate to Scenario Authoring
+        # -------------------------------
+        slider = SliderPage(driver)
+        slider.open_scenario_authoring_tool()
+    
+        # -------------------------------
+        # Verify Scenario Authoring Loaded
+        # -------------------------------
+        scenario = ScenarioAuthoringPage(driver)
+>       scenario.verify_landing()
+
+tests\test_scenario_authoring_flow.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages\scenario_authoring_page.py:17: in verify_landing
+    self.wait.until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="d9787f1f92e79fb97758147d8917849b")>
+method = <function presence_of_element_located.<locals>._predicate at 0x00000229460ACCA0>, message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       Symbols not available. Dumping unresolved backtrace:
+E       	0x7ff71cd488d5
+E       	0x7ff71cd48930
+E       	0x7ff71cb2165d
+E       	0x7ff71cb79a33
+E       	0x7ff71cb79d3c
+E       	0x7ff71cbcdf67
+E       	0x7ff71cbcac97
+E       	0x7ff71cb6ac29
+E       	0x7ff71cb6ba93
+E       	0x7ff71d060620
+E       	0x7ff71d05af60
+E       	0x7ff71d0796c6
+E       	0x7ff71cd65dd4
+E       	0x7ff71cd6ed7c
+E       	0x7ff71cd51ff4
+E       	0x7ff71cd521a5
+E       	0x7ff71cd37ed2
+E       	0x7ffb561be8d7
+E       	0x7ffb57b2c53c
+
+..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\wait.py:122: TimeoutException
