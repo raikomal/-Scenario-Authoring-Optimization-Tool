@@ -1,11 +1,12 @@
 import time
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-
-from pages.base_page import BasePage
 from pages.scenario_authoring_locators import ScenarioAuthoringLocators as L
 
 
@@ -13,26 +14,7 @@ class ScenarioAuthoringPage:
 
     def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(driver, 25)
-
-    # 👇 ADD THIS METHOD ANYWHERE INSIDE THE CLASS
-    def set_slider(self, label, value):
-        slider = self.wait.until(
-            EC.presence_of_element_located(L.SLIDER(label))
-        )
-
-        self.driver.execute_script(
-            """
-            arguments[0].value = arguments[1];
-            arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
-            arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
-            """,
-            slider,
-            value
-        )
-
-        print(f"✅ {label} slider set to {value}")
-
+        self.wait = WebDriverWait(driver, 30)
 
     # -------------------------------------------------
     # PAGE LOAD VALIDATION
@@ -42,20 +24,18 @@ class ScenarioAuthoringPage:
         print("✅ Scenario Authoring page loaded (layout + header confirmed)")
 
     # -------------------------------------------------
-    # REACT SELECT (PLAYWRIGHT-LIKE BEHAVIOR)
+    # REACT SELECT DROPDOWN HANDLER
     # -------------------------------------------------
     def select_react_dropdown(self, label_text, values):
         """
-        Stable React-Select handler
+        Stable React-Select handler:
         - Clears old values
         - Selects fresh values
-        - Works across reruns
         """
 
         if isinstance(values, str):
             values = [values]
 
-        # Locate field container using label
         container = self.wait.until(
             EC.visibility_of_element_located((
                 By.XPATH,
@@ -63,7 +43,7 @@ class ScenarioAuthoringPage:
             ))
         )
 
-        # 🔴 CLEAR EXISTING CHIPS (critical fix)
+        # Clear existing chips
         clear_icons = container.find_elements(
             By.XPATH, ".//*[name()='svg' and @aria-hidden='true']"
         )
@@ -74,12 +54,10 @@ class ScenarioAuthoringPage:
             except:
                 pass
 
-        # Focus actual input
         input_box = container.find_element(By.XPATH, ".//input")
         input_box.click()
         time.sleep(0.3)
 
-        # Select values
         for value in values:
             input_box.send_keys(value)
             time.sleep(0.4)
@@ -88,15 +66,87 @@ class ScenarioAuthoringPage:
 
         print(f"✅ Selected {values} in {label_text}")
 
-    # # -------------------------------------------------
-    # # SLIDER HANDLER
-    # # -------------------------------------------------
-    # def set_slider(self, locator, value):
-    #     slider = self.wait.until(EC.element_to_be_clickable(locator))
-    #     self.driver.execute_script(
-    #         "arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input'));",
-    #         slider, value
-    #     )
+    # -------------------------------------------------
+    # SLIDER HANDLER (REACT SAFE)
+    # -------------------------------------------------
+    def set_slider(self, label, value):
+        slider = self.wait.until(
+            EC.presence_of_element_located(L.SLIDER(label))
+        )
+
+        self.driver.execute_script(
+            """
+            const slider = arguments[0];
+            const value = arguments[1];
+
+            slider.focus();
+            slider.value = value;
+
+            slider.dispatchEvent(new Event('input', { bubbles: true }));
+            slider.dispatchEvent(new Event('change', { bubbles: true }));
+            """,
+            slider,
+            value
+        )
+
+        time.sleep(0.3)
+        print(f"✅ {label} slider set to {value}")
+
+    def set_start_date(self, date_value):
+        date_input = self.wait.until(
+            EC.presence_of_element_located(L.START_DATE)
+        )
+
+        self.driver.execute_script(
+            """
+            const input = arguments[0];
+            const value = arguments[1];
+
+            input.focus();
+            input.value = value;
+
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+            """,
+            date_input,
+            date_value
+        )
+
+        print(f"✅ Start date set to {date_value}")
+
+    # -------------------------------------------------
+    # SCROLL + MOVE REACT FLOW NETWORK GRAPH
+    # -------------------------------------------------
+    def scroll_and_move_network_graph(self):
+        body = self.driver.find_element(By.TAG_NAME, "body")
+        body.click()
+        time.sleep(0.5)
+
+        # 1️⃣ Scroll down like real user
+        for _ in range(6):
+            body.send_keys(Keys.PAGE_DOWN)
+            time.sleep(0.3)
+
+        print("✅ Wheel scroll executed")
+
+        # 2️⃣ Graph render signal
+        self.wait.until(EC.visibility_of_element_located(L.TOPOLOGY_VIEW_BTN))
+        print("✅ Network section visible")
+
+        time.sleep(1)
+
+        # 3️⃣ SAFE drag (small bounded movement)
+        actions = ActionChains(self.driver)
+
+        actions.move_to_element(body) \
+            .click_and_hold() \
+            .move_by_offset(-150, 0) \
+            .pause(0.2) \
+            .move_by_offset(150, 0) \
+            .release() \
+            .perform()
+
+        print("✅ Network graph drag simulated safely")
 
     # -------------------------------------------------
     # MAIN FLOW
@@ -109,16 +159,25 @@ class ScenarioAuthoringPage:
         self.select_react_dropdown("Equipment Type", ["Generator w/ Enclosure"])
 
         # ----------- START DATE -----------
-        start_date = self.wait.until(EC.element_to_be_clickable(L.START_DATE))
-        start_date.clear()
-        start_date.send_keys("2025-06-12")
-        print("✅ Start date set")
+        self.set_start_date("2025-02-20")
 
-        # ---------- SLIDERS (ADD HERE) ----------
+        # ----------- SLIDERS -----------
         self.set_slider("Demand Multiplier", 0.60)
         self.set_slider("Time Steps", 11)
         self.set_slider("Days per period", 6)
 
-        # ----------- GENERATE -----------
+        # Generate
         self.wait.until(EC.element_to_be_clickable(L.GENERATE_BUTTON)).click()
         print("✅ Generate & Visualize clicked")
+
+        # Graph render signal (THIS is your wait)
+        self.wait.until(EC.visibility_of_element_located(L.TOPOLOGY_VIEW_BTN))
+        self.wait.until(EC.visibility_of_element_located(L.EDGE_METRICS_BTN))
+        print("✅ Network view buttons visible")
+
+        time.sleep(1)
+
+        # Scroll + move (NO graph lookup)
+        self.scroll_and_move_network_graph()
+
+

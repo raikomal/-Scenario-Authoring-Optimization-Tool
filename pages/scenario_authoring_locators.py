@@ -3,6 +3,19 @@ from selenium.webdriver.common.by import By
 
 class ScenarioAuthoringLocators:
 
+    # ---------------- PAGE LOAD ----------------
+    PAGE_ROOT = (
+        By.XPATH,
+        "//div[normalize-space()='Supply Chain Network Configuration']"
+    )
+
+    # ---------------- DATE ----------------
+    START_DATE = (
+        By.XPATH,
+        "//label[normalize-space()='Start Date']/following::input[1]"
+    )
+
+    # ---------------- SLIDERS ----------------
     @staticmethod
     def SLIDER(label):
         return (
@@ -10,36 +23,31 @@ class ScenarioAuthoringLocators:
             f"//label[normalize-space()='{label}']/following::input[@type='range'][1]"
         )
 
-    # PAGE LOAD CHECK
-    PAGE_ROOT = (
-        By.XPATH,
-        "//div[contains(@class,'text-gray-100') and contains(text(),'Supply')]"
-    )
-
-    # DATE
-    START_DATE = (
-        By.XPATH,
-        "//label[normalize-space()='Start Date']/following::input[1]"
-    )
-
-    # SLIDERS
-    DEMAND_MULTIPLIER = (
-        By.XPATH,
-        "//label[normalize-space()='Demand Multiplier']/following::input[@type='range'][1]"
-    )
-
-    TIME_STEPS = (
-        By.XPATH,
-        "//label[normalize-space()='Time Steps']/following::input[@type='range'][1]"
-    )
-
-    DAYS_PER_PERIOD = (
-        By.XPATH,
-        "//label[normalize-space()='Days per period']/following::input[@type='range'][1]"
-    )
-
-    # ACTION
+    # ---------------- ACTION ----------------
     GENERATE_BUTTON = (
         By.XPATH,
         "//button[normalize-space()='Generate & Visualize Supply Chain Network']"
+    )
+
+    # ---------------- NETWORK ----------------
+    NETWORK_OVERVIEW_CONTAINER = (
+        By.XPATH,
+        "//div[.//div[normalize-space()='Network Overview']]"
+    )
+
+
+
+    NETWORK_GRAPH_RENDERER = (
+        By.CSS_SELECTOR,
+        ".react-flow__renderer"
+    )
+
+    TOPOLOGY_VIEW_BTN = (
+        By.XPATH,
+        "//button[normalize-space()='Topology View']"
+    )
+
+    EDGE_METRICS_BTN = (
+        By.XPATH,
+        "//button[normalize-space()='Edge Metrics']"
     )
