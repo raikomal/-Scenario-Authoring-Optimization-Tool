@@ -3,19 +3,19 @@ from selenium.webdriver.common.by import By
 
 class ScenarioAuthoringLocators:
 
-    # ---------------- PAGE LOAD ----------------
+    # ================= PAGE LOAD =================
     PAGE_ROOT = (
         By.XPATH,
         "//div[normalize-space()='Supply Chain Network Configuration']"
     )
 
-    # ---------------- DATE ----------------
+    # ================= DATE =================
     START_DATE = (
         By.XPATH,
         "//label[normalize-space()='Start Date']/following::input[1]"
     )
 
-    # ---------------- SLIDERS ----------------
+    # ================= SLIDERS =================
     @staticmethod
     def SLIDER(label):
         return (
@@ -23,25 +23,13 @@ class ScenarioAuthoringLocators:
             f"//label[normalize-space()='{label}']/following::input[@type='range'][1]"
         )
 
-    # ---------------- ACTION ----------------
+    # ================= ACTION =================
     GENERATE_BUTTON = (
         By.XPATH,
         "//button[normalize-space()='Generate & Visualize Supply Chain Network']"
     )
 
-    # ---------------- NETWORK ----------------
-    NETWORK_OVERVIEW_CONTAINER = (
-        By.XPATH,
-        "//div[.//div[normalize-space()='Network Overview']]"
-    )
-
-
-
-    NETWORK_GRAPH_RENDERER = (
-        By.CSS_SELECTOR,
-        ".react-flow__renderer"
-    )
-
+    # ================= NETWORK =================
     TOPOLOGY_VIEW_BTN = (
         By.XPATH,
         "//button[normalize-space()='Topology View']"
@@ -51,9 +39,27 @@ class ScenarioAuthoringLocators:
         By.XPATH,
         "//button[normalize-space()='Edge Metrics']"
     )
+
+    # ================= EDGE KPIs TABLE =================
     EDGE_KPIS_SCROLL_CONTAINER = (
         By.XPATH,
-        "//h2[normalize-space()='Edge Kpis']"
+        "//h2[contains(translate(., 'KPIS', 'kpis'), 'kpis')]"
         "/following::div[contains(@class,'overflow-y-auto')][1]"
     )
 
+    # ================= CONFIGURATION & SOLVE =================
+    CONFIGURATION_SOLVE_BTN = (
+        By.XPATH,
+        "//button[normalize-space()='Configuration and Solve']"
+    )
+
+    RUN_OPTIMIZATION_BTN = (
+        By.XPATH,
+        "//button[normalize-space()='Run Optimization']"
+    )
+
+    # React TradeOff component mount signal
+    TRADEOFF_ROOT = (
+        By.XPATH,
+        "//label[normalize-space()='Allocation Priority']"
+    )
