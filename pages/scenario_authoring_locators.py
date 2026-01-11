@@ -51,3 +51,9 @@ class ScenarioAuthoringLocators:
         By.XPATH,
         "//button[normalize-space()='Edge Metrics']"
     )
+    EDGE_KPIS_SCROLL_CONTAINER = (
+        By.XPATH,
+        "//h2[normalize-space()='Edge Kpis']"
+        "/following::div[contains(@class,'overflow-y-auto')][1]"
+    )
+

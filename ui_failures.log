@@ -1524,3 +1524,87 @@ E       	0x7ffb57b2c53c
 
 ..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\errorhandler.py:232: MoveTargetOutOfBoundsException
 ================================================================================
+
+================================================================================
+Test Failed: test_scenario_authoring_full_flow
+driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="2d9547a14cf46e655245d7c946e653b4")>
+
+    @pytest.mark.e2e
+    def test_scenario_authoring_full_flow(driver):
+    
+        start_new_report()
+        task_id = 1
+    
+        # LOGIN
+        LoginPage(driver).login("user@gmail.com", "12345")
+    
+        write_test_report(
+            "Tower Track", "Web", "Login",
+            "Valid Login",
+            "Login with valid credentials",
+            "Enter username and password",
+            "User should login successfully",
+            "User logged in",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # NAVIGATION
+        SliderPage(driver).hover_and_click_scenario_authoring_tool()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights", "Navigation",
+            "Navigate to Scenario Authoring Tool",
+            "Open Scenario Authoring & Optimization Tool",
+            "Click Scenario Authoring card",
+            "Page should open",
+            "Page opened",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # PAGE VALIDATION
+        scenario_page = ScenarioAuthoringPage(driver)
+        scenario_page.validate_page_loaded()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights",
+            "Scenario Authoring & Optimization Tool",
+            "Verify Page Load",
+            "Ensure Scenario Authoring page loads correctly",
+            "Open Scenario Authoring tool",
+            "Scenario Authoring page should load",
+            "Page loaded successfully",
+            "Pass", "", task_id
+        )
+        scenario_page = ScenarioAuthoringPage(driver)
+    
+        scenario_page.validate_page_loaded()
+>       scenario_page.configure_sc_network_and_generate()
+
+tests\test_scenario_authoring_flow.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages\scenario_authoring_page.py:214: in configure_sc_network_and_generate
+    self.open_edge_metrics_and_scroll_table()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pages.scenario_authoring_page.ScenarioAuthoringPage object at 0x00000124F88DA410>
+
+    def open_edge_metrics_and_scroll_table(self):
+        print("➡ Opening Edge Metrics")
+    
+        # Click Edge Metrics button
+        self.wait.until(
+            EC.element_to_be_clickable(L.EDGE_METRICS_BTN)
+        ).click()
+    
+        time.sleep(2)
+    
+        # Locate Edge KPIs scrollable table
+        table = self.wait.until(
+>           EC.visibility_of_element_located(L.EDGE_KPIS_SCROLL_CONTAINER)
+        )
+E       AttributeError: type object 'ScenarioAuthoringLocators' has no attribute 'EDGE_KPIS_SCROLL_CONTAINER'
+
+pages\scenario_authoring_page.py:163: AttributeError
+================================================================================

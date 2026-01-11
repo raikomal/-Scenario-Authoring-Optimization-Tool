@@ -148,6 +148,37 @@ class ScenarioAuthoringPage:
 
         print("✅ Network graph drag simulated safely")
 
+    def open_edge_metrics_and_scroll_table(self):
+        print("➡ Opening Edge Metrics")
+
+        # Click Edge Metrics button
+        self.wait.until(
+            EC.element_to_be_clickable(L.EDGE_METRICS_BTN)
+        ).click()
+
+        time.sleep(2)
+
+        # Locate Edge KPIs scrollable table
+        table = self.wait.until(
+            EC.visibility_of_element_located(L.EDGE_KPIS_SCROLL_CONTAINER)
+        )
+
+        # Scroll DOWN inside table
+        self.driver.execute_script(
+            "arguments[0].scrollTop = arguments[0].scrollHeight;",
+            table
+        )
+        time.sleep(2)
+
+        # Scroll UP inside table
+        self.driver.execute_script(
+            "arguments[0].scrollTop = 0;",
+            table
+        )
+        time.sleep(1)
+
+        print("✅ Edge KPIs table scrolled")
+
     # -------------------------------------------------
     # MAIN FLOW
     # -------------------------------------------------
@@ -179,5 +210,8 @@ class ScenarioAuthoringPage:
 
         # Scroll + move (NO graph lookup)
         self.scroll_and_move_network_graph()
+
+        self.open_edge_metrics_and_scroll_table()
+
 
 
