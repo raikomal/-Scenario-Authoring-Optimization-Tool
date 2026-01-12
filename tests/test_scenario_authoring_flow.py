@@ -59,3 +59,4 @@ def test_scenario_authoring_full_flow(driver):
     scenario_page.switch_to_granular_view()
     scenario_page.select_granular_source_and_target()
     scenario_page.adjust_granular_sliders()
+    scenario_page.scroll_granular_results_fully()

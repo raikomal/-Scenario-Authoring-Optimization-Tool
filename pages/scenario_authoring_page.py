@@ -491,9 +491,9 @@ class ScenarioAuthoringPage:
         print("✅ Granular View fully loaded and ready")
 
     def select_granular_source_and_target(self):
-        print("🎯 Selecting Granular Source & Target nodes (FINAL WORKING FIX)")
+        print("🎯 Selecting Granular Source & Target nodes (FINAL + AUTO SCROLL)")
 
-        # Ensure Granular page is ready
+        # Ensure Granular page ready
         self.wait.until(
             EC.visibility_of_element_located(
                 (By.XPATH, "//h2[normalize-space()='Scenario Controls']")
@@ -501,7 +501,7 @@ class ScenarioAuthoringPage:
         )
 
         # =========================
-        # SOURCE NODE (DC-Chicago)
+        # SOURCE NODE
         # =========================
         source_select = self.wait.until(
             EC.element_to_be_clickable((
@@ -513,10 +513,10 @@ class ScenarioAuthoringPage:
         Select(source_select).select_by_visible_text("DC-Chicago")
         print("✅ Source Node selected: DC-Chicago")
 
-        time.sleep(1)  # IMPORTANT: allow Target options to refresh
+        time.sleep(1)  # IMPORTANT – React updates Target options
 
         # =========================
-        # TARGET NODE (Lane-West)
+        # TARGET NODE
         # =========================
         target_select = self.wait.until(
             EC.element_to_be_clickable((
@@ -528,15 +528,26 @@ class ScenarioAuthoringPage:
         Select(target_select).select_by_visible_text("Lane-West")
         print("✅ Target Node selected: Lane-West")
 
-        time.sleep(1)  # IMPORTANT: allow charts + data to load
+        time.sleep(1)  # IMPORTANT – data generation starts
 
         # =========================
-        # SCROLL TO GENERATED DATA
+        # AUTO SCROLL TO GENERATED DATA
         # =========================
-        self.driver.execute_script(
-            "arguments[0].scrollIntoView({block:'center'});",
-            target_select
-        )
+        print("⬇ Scrolling to auto-generated network & KPI data")
+
+        try:
+            network_header = self.wait.until(
+                EC.presence_of_element_located((
+                    By.XPATH, "//h2[normalize-space()='Supply Chain Network']"
+                ))
+            )
+            self.driver.execute_script(
+                "arguments[0].scrollIntoView({block:'center', behavior:'smooth'});",
+                network_header
+            )
+        except:
+            # Fallback: scroll viewport
+            self.driver.execute_script("window.scrollBy(0, 600);")
 
         time.sleep(1)
 
@@ -569,6 +580,36 @@ class ScenarioAuthoringPage:
             time.sleep(0.3)
 
         print("🎉 Granular sliders configured")
+
+    def scroll_granular_results_fully(self):
+        print("⬇ Scrolling Granular results container FULLY")
+
+        try:
+            scroll_container = self.wait.until(
+                EC.presence_of_element_located((
+                    By.XPATH,
+                    "//div[contains(@class,'mt-4') and contains(@class,'bg')]"
+                ))
+            )
+
+            # Force full scroll
+            self.driver.execute_script("""
+                arguments[0].scrollTop = arguments[0].scrollHeight;
+            """, scroll_container)
+
+            time.sleep(1)
+
+            # Extra nudge (some layouts need it)
+            self.driver.execute_script("""
+                arguments[0].scrollBy(0, 400);
+            """, scroll_container)
+
+            print("✅ Granular data scrolled fully into view")
+
+        except Exception as e:
+            print("⚠ Granular container not found, using page scroll fallback")
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(1)
 
     # -------------------------------------------------
     # MAIN FLOW
