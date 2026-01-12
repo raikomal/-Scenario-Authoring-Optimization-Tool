@@ -493,63 +493,54 @@ class ScenarioAuthoringPage:
     def select_granular_source_and_target(self):
         print("🎯 Selecting Granular Source & Target nodes (FINAL + AUTO SCROLL)")
 
-        # Ensure Granular page ready
+        # Wait for Granular page
         self.wait.until(
             EC.visibility_of_element_located(
                 (By.XPATH, "//h2[normalize-space()='Scenario Controls']")
             )
         )
 
-        # =========================
-        # SOURCE NODE
-        # =========================
+        # ======================
+        # SOURCE NODE (React-safe)
+        # ======================
         source_select = self.wait.until(
-            EC.element_to_be_clickable((
+            EC.presence_of_element_located((
                 By.XPATH,
                 "//label[normalize-space()='Source Node :']/following-sibling::select"
             ))
         )
 
-        Select(source_select).select_by_visible_text("DC-Chicago")
-        print("✅ Source Node selected: DC-Chicago")
+        self.driver.execute_script("""
+            arguments[0].value = 'DC-Chicago';
+            arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
+        """, source_select)
 
-        time.sleep(1)  # IMPORTANT – React updates Target options
+        time.sleep(1)
 
-        # =========================
-        # TARGET NODE
-        # =========================
+        # ======================
+        # TARGET NODE (depends on Source)
+        # ======================
         target_select = self.wait.until(
-            EC.element_to_be_clickable((
+            EC.presence_of_element_located((
                 By.XPATH,
                 "//label[normalize-space()='Target Node :']/following-sibling::select"
             ))
         )
 
-        Select(target_select).select_by_visible_text("Lane-West")
-        print("✅ Target Node selected: Lane-West")
-
-        time.sleep(1)  # IMPORTANT – data generation starts
-
-        # =========================
-        # AUTO SCROLL TO GENERATED DATA
-        # =========================
-        print("⬇ Scrolling to auto-generated network & KPI data")
-
-        try:
-            network_header = self.wait.until(
-                EC.presence_of_element_located((
-                    By.XPATH, "//h2[normalize-space()='Supply Chain Network']"
-                ))
-            )
-            self.driver.execute_script(
-                "arguments[0].scrollIntoView({block:'center', behavior:'smooth'});",
-                network_header
-            )
-        except:
-            # Fallback: scroll viewport
-            self.driver.execute_script("window.scrollBy(0, 600);")
+        self.driver.execute_script("""
+            arguments[0].value = 'Lane-West';
+            arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
+        """, target_select)
 
         time.sleep(1)
+
+        print("✅ Source Node selected: DC-Chicago")
+        print("✅ Target Node selected: Lane-West")
+
+        # ======================
+        # FULL SCROLL FOR GENERATED DATA
+        # ======================
+        self.scroll_granular_results_fully()
 
     def adjust_granular_sliders(self):
         print("🎚 Adjusting Granular sliders (VISIBLE & STABLE)")
@@ -584,32 +575,17 @@ class ScenarioAuthoringPage:
     def scroll_granular_results_fully(self):
         print("⬇ Scrolling Granular results container FULLY")
 
-        try:
-            scroll_container = self.wait.until(
-                EC.presence_of_element_located((
-                    By.XPATH,
-                    "//div[contains(@class,'mt-4') and contains(@class,'bg')]"
-                ))
-            )
+        self.driver.execute_script("""
+            const container = document.querySelector("div.mt-4");
+            if (container) {
+                container.scrollTop = container.scrollHeight;
+            } else {
+                window.scrollTo(0, document.body.scrollHeight);
+            }
+        """)
 
-            # Force full scroll
-            self.driver.execute_script("""
-                arguments[0].scrollTop = arguments[0].scrollHeight;
-            """, scroll_container)
-
-            time.sleep(1)
-
-            # Extra nudge (some layouts need it)
-            self.driver.execute_script("""
-                arguments[0].scrollBy(0, 400);
-            """, scroll_container)
-
-            print("✅ Granular data scrolled fully into view")
-
-        except Exception as e:
-            print("⚠ Granular container not found, using page scroll fallback")
-            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(1)
+        time.sleep(1)
+        print("✅ Granular data scrolled fully into view")
 
     # -------------------------------------------------
     # MAIN FLOW

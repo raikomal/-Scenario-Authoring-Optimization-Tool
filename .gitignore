@@ -1,0 +1,14 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Pytest cache
+.pytest_cache/
+
+# Reports & logs
+ui_test_report_*.csv
+ui_failures.log
+
+# Temp accidental files
+pytest
+raise
