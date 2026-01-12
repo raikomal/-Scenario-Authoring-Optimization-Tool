@@ -3317,3 +3317,1419 @@ E       	0x7ffb57b2c53c
 
 ..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\wait.py:122: TimeoutException
 ================================================================================
+
+================================================================================
+Test Failed: test_scenario_authoring_full_flow
+driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="5b5d89b00f0db863727679128384215c")>
+
+    @pytest.mark.e2e
+    def test_scenario_authoring_full_flow(driver):
+    
+        start_new_report()
+        task_id = 1
+    
+        # LOGIN
+        LoginPage(driver).login("user@gmail.com", "12345")
+    
+        write_test_report(
+            "Tower Track", "Web", "Login",
+            "Valid Login",
+            "Login with valid credentials",
+            "Enter username and password",
+            "User should login successfully",
+            "User logged in",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # NAVIGATION
+        SliderPage(driver).hover_and_click_scenario_authoring_tool()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights", "Navigation",
+            "Navigate to Scenario Authoring Tool",
+            "Open Scenario Authoring & Optimization Tool",
+            "Click Scenario Authoring card",
+            "Page should open",
+            "Page opened",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # PAGE VALIDATION
+        scenario_page = ScenarioAuthoringPage(driver)
+        scenario_page.validate_page_loaded()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights",
+            "Scenario Authoring & Optimization Tool",
+            "Verify Page Load",
+            "Ensure Scenario Authoring page loads correctly",
+            "Open Scenario Authoring tool",
+            "Scenario Authoring page should load",
+            "Page loaded successfully",
+            "Pass", "", task_id
+        )
+        scenario_page = ScenarioAuthoringPage(driver)
+    
+        scenario_page.validate_page_loaded()
+>       scenario_page.configure_sc_network_and_generate()
+
+tests\test_scenario_authoring_flow.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages\scenario_authoring_page.py:417: in configure_sc_network_and_generate
+    self.open_edge_metrics_and_scroll_table()
+pages\scenario_authoring_page.py:148: in open_edge_metrics_and_scroll_table
+    self.wait.until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="5b5d89b00f0db863727679128384215c")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x00000242260D0EE0>, message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       Symbols not available. Dumping unresolved backtrace:
+E       	0x7ff7368788d5
+E       	0x7ff736878930
+E       	0x7ff73665165d
+E       	0x7ff7366a9a33
+E       	0x7ff7366a9d3c
+E       	0x7ff7366fdf67
+E       	0x7ff7366fac97
+E       	0x7ff73669ac29
+E       	0x7ff73669ba93
+E       	0x7ff736b90620
+E       	0x7ff736b8af60
+E       	0x7ff736ba96c6
+E       	0x7ff736895dd4
+E       	0x7ff73689ed7c
+E       	0x7ff736881ff4
+E       	0x7ff7368821a5
+E       	0x7ff736867ed2
+E       	0x7fff9961e8d7
+E       	0x7fff9a7cc53c
+
+..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\wait.py:122: TimeoutException
+================================================================================
+
+================================================================================
+Test Failed: test_scenario_authoring_full_flow
+driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="f1ded8bf7161ed1ba62288746e7adf15")>
+
+    @pytest.mark.e2e
+    def test_scenario_authoring_full_flow(driver):
+    
+        start_new_report()
+        task_id = 1
+    
+        # LOGIN
+        LoginPage(driver).login("user@gmail.com", "12345")
+    
+        write_test_report(
+            "Tower Track", "Web", "Login",
+            "Valid Login",
+            "Login with valid credentials",
+            "Enter username and password",
+            "User should login successfully",
+            "User logged in",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # NAVIGATION
+        SliderPage(driver).hover_and_click_scenario_authoring_tool()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights", "Navigation",
+            "Navigate to Scenario Authoring Tool",
+            "Open Scenario Authoring & Optimization Tool",
+            "Click Scenario Authoring card",
+            "Page should open",
+            "Page opened",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # PAGE VALIDATION
+        scenario_page = ScenarioAuthoringPage(driver)
+        scenario_page.validate_page_loaded()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights",
+            "Scenario Authoring & Optimization Tool",
+            "Verify Page Load",
+            "Ensure Scenario Authoring page loads correctly",
+            "Open Scenario Authoring tool",
+            "Scenario Authoring page should load",
+            "Page loaded successfully",
+            "Pass", "", task_id
+        )
+        scenario_page = ScenarioAuthoringPage(driver)
+    
+        scenario_page.validate_page_loaded()
+>       scenario_page.configure_sc_network_and_generate()
+
+tests\test_scenario_authoring_flow.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages\scenario_authoring_page.py:417: in configure_sc_network_and_generate
+    self.scroll_to_cost_breakdown_optimized()
+pages\scenario_authoring_page.py:282: in scroll_to_cost_breakdown_optimized
+    header = self.wait.until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="f1ded8bf7161ed1ba62288746e7adf15")>
+method = <function visibility_of_element_located.<locals>._predicate at 0x000001D39B8B0EE0>, message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       Symbols not available. Dumping unresolved backtrace:
+E       	0x7ff7368788d5
+E       	0x7ff736878930
+E       	0x7ff73665165d
+E       	0x7ff7366a9a33
+E       	0x7ff7366a9d3c
+E       	0x7ff7366fdf67
+E       	0x7ff7366fac97
+E       	0x7ff73669ac29
+E       	0x7ff73669ba93
+E       	0x7ff736b90620
+E       	0x7ff736b8af60
+E       	0x7ff736ba96c6
+E       	0x7ff736895dd4
+E       	0x7ff73689ed7c
+E       	0x7ff736881ff4
+E       	0x7ff7368821a5
+E       	0x7ff736867ed2
+E       	0x7fff9961e8d7
+E       	0x7fff9a7cc53c
+
+..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\wait.py:122: TimeoutException
+================================================================================
+
+================================================================================
+Test Failed: test_scenario_authoring_full_flow
+driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="6084ddac26dd7fd21cbc3ced0211cf18")>
+
+    @pytest.mark.e2e
+    def test_scenario_authoring_full_flow(driver):
+    
+        start_new_report()
+        task_id = 1
+    
+        # LOGIN
+        LoginPage(driver).login("user@gmail.com", "12345")
+    
+        write_test_report(
+            "Tower Track", "Web", "Login",
+            "Valid Login",
+            "Login with valid credentials",
+            "Enter username and password",
+            "User should login successfully",
+            "User logged in",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # NAVIGATION
+        SliderPage(driver).hover_and_click_scenario_authoring_tool()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights", "Navigation",
+            "Navigate to Scenario Authoring Tool",
+            "Open Scenario Authoring & Optimization Tool",
+            "Click Scenario Authoring card",
+            "Page should open",
+            "Page opened",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # PAGE VALIDATION
+        scenario_page = ScenarioAuthoringPage(driver)
+        scenario_page.validate_page_loaded()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights",
+            "Scenario Authoring & Optimization Tool",
+            "Verify Page Load",
+            "Ensure Scenario Authoring page loads correctly",
+            "Open Scenario Authoring tool",
+            "Scenario Authoring page should load",
+            "Page loaded successfully",
+            "Pass", "", task_id
+        )
+        scenario_page = ScenarioAuthoringPage(driver)
+    
+        scenario_page.validate_page_loaded()
+>       scenario_page.configure_sc_network_and_generate()
+
+tests\test_scenario_authoring_flow.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages\scenario_authoring_page.py:473: in configure_sc_network_and_generate
+    self.hover_cost_breakdown_optimized()
+pages\scenario_authoring_page.py:407: in hover_cost_breakdown_optimized
+    .perform()
+..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\common\action_chains.py:96: in perform
+    self.w3c_actions.perform()
+..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\common\actions\action_builder.py:148: in perform
+    self.driver.execute(Command.W3C_ACTIONS, enc)
+..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\webdriver.py:432: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x0000022DCD68C040>
+response = {'status': 404, 'value': '{"value":{"error":"invalid session id","message":"invalid session id: session deleted as the...ff73689ed7c\\n\\t0x7ff736881ff4\\n\\t0x7ff7368821a5\\n\\t0x7ff736867ed2\\n\\t0x7fff9961e8d7\\n\\t0x7fff9a7cc53c\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -> None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "<anonymous>")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "<anonymous>")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+>       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+E       from disconnected: unable to send message to renderer
+E         (Session info: chrome=143.0.7499.193); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalidsessionidexception
+E       Stacktrace:
+E       Symbols not available. Dumping unresolved backtrace:
+E       	0x7ff7368788d5
+E       	0x7ff736878930
+E       	0x7ff73665165d
+E       	0x7ff73663d82c
+E       	0x7ff73663d78c
+E       	0x7ff73663bfaa
+E       	0x7ff73663c9f2
+E       	0x7ff73663b2d6
+E       	0x7ff73665f0f0
+E       	0x7ff736707e75
+E       	0x7ff7366d1fda
+E       	0x7ff7366fac97
+E       	0x7ff73669ac29
+E       	0x7ff73669ba93
+E       	0x7ff736b90620
+E       	0x7ff736b8af60
+E       	0x7ff736ba96c6
+E       	0x7ff736895dd4
+E       	0x7ff73689ed7c
+E       	0x7ff736881ff4
+E       	0x7ff7368821a5
+E       	0x7ff736867ed2
+E       	0x7fff9961e8d7
+E       	0x7fff9a7cc53c
+
+..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\remote\errorhandler.py:232: InvalidSessionIdException
+================================================================================
+
+================================================================================
+Test Failed: test_scenario_authoring_full_flow
+driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="bc4128f961e38f0ad638a351dfccce9e")>
+
+    @pytest.mark.e2e
+    def test_scenario_authoring_full_flow(driver):
+    
+        start_new_report()
+        task_id = 1
+    
+        # LOGIN
+        LoginPage(driver).login("user@gmail.com", "12345")
+    
+        write_test_report(
+            "Tower Track", "Web", "Login",
+            "Valid Login",
+            "Login with valid credentials",
+            "Enter username and password",
+            "User should login successfully",
+            "User logged in",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # NAVIGATION
+        SliderPage(driver).hover_and_click_scenario_authoring_tool()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights", "Navigation",
+            "Navigate to Scenario Authoring Tool",
+            "Open Scenario Authoring & Optimization Tool",
+            "Click Scenario Authoring card",
+            "Page should open",
+            "Page opened",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # PAGE VALIDATION
+        scenario_page = ScenarioAuthoringPage(driver)
+        scenario_page.validate_page_loaded()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights",
+            "Scenario Authoring & Optimization Tool",
+            "Verify Page Load",
+            "Ensure Scenario Authoring page loads correctly",
+            "Open Scenario Authoring tool",
+            "Scenario Authoring page should load",
+            "Page loaded successfully",
+            "Pass", "", task_id
+        )
+        scenario_page = ScenarioAuthoringPage(driver)
+    
+        scenario_page.validate_page_loaded()
+>       scenario_page.configure_sc_network_and_generate()
+
+tests\test_scenario_authoring_flow.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages\scenario_authoring_page.py:473: in configure_sc_network_and_generate
+    self.hover_cost_breakdown_optimized()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pages.scenario_authoring_page.ScenarioAuthoringPage object at 0x000001B56E5D28C0>
+
+    def hover_cost_breakdown_optimized(self):
+        print("🟡 Hovering Cost Breakdown (Optimized) bars — VERIFIED hover")
+    
+        bars = self.wait.until(
+            EC.presence_of_all_elements_located((
+                By.XPATH,
+                "//div[contains(@id,'highcharts')]//*[name()='path' and contains(@class,'highcharts-point')]"
+            ))
+        )
+    
+        actions = ActionChains(self.driver)
+    
+        hovered_any = False
+    
+        for bar in bars[:5]:
+            actions.move_to_element(bar).pause(0.6) \
+                .move_by_offset(6, 0).pause(0.6) \
+                .move_by_offset(-6, 0).pause(0.6) \
+                .perform()
+    
+            try:
+                # 🔑 THIS IS THE REAL CHECK
+                self.wait.until(
+                    EC.visibility_of_element_located((
+                        By.XPATH,
+                        "//div[contains(@class,'highcharts-tooltip')]"
+                    ))
+                )
+                print("✅ Tooltip appeared")
+                hovered_any = True
+                break
+    
+            except TimeoutException:
+                print("⚠ Tooltip not visible yet, trying next bar")
+    
+        if not hovered_any:
+>           raise AssertionError("❌ Hover executed but Highcharts tooltip NEVER appeared")
+E           AssertionError: ❌ Hover executed but Highcharts tooltip NEVER appeared
+
+pages\scenario_authoring_page.py:425: AssertionError
+================================================================================
+
+================================================================================
+Test Failed: test_scenario_authoring_full_flow
+driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="5d80651b721e589b02e25b21d21cb927")>
+
+    @pytest.mark.e2e
+    def test_scenario_authoring_full_flow(driver):
+    
+        start_new_report()
+        task_id = 1
+    
+        # LOGIN
+        LoginPage(driver).login("user@gmail.com", "12345")
+    
+        write_test_report(
+            "Tower Track", "Web", "Login",
+            "Valid Login",
+            "Login with valid credentials",
+            "Enter username and password",
+            "User should login successfully",
+            "User logged in",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # NAVIGATION
+        SliderPage(driver).hover_and_click_scenario_authoring_tool()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights", "Navigation",
+            "Navigate to Scenario Authoring Tool",
+            "Open Scenario Authoring & Optimization Tool",
+            "Click Scenario Authoring card",
+            "Page should open",
+            "Page opened",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # PAGE VALIDATION
+        scenario_page = ScenarioAuthoringPage(driver)
+        scenario_page.validate_page_loaded()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights",
+            "Scenario Authoring & Optimization Tool",
+            "Verify Page Load",
+            "Ensure Scenario Authoring page loads correctly",
+            "Open Scenario Authoring tool",
+            "Scenario Authoring page should load",
+            "Page loaded successfully",
+            "Pass", "", task_id
+        )
+    
+        # MAIN FLOW
+        scenario_page.configure_sc_network_and_generate()
+    
+        # GRANULAR VIEW FLOW
+>       scenario_page.switch_to_granular_view()
+
+tests\test_scenario_authoring_flow.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages\scenario_authoring_page.py:464: in switch_to_granular_view
+    granular_btn = self.wait.until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="5d80651b721e589b02e25b21d21cb927")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x00000241F4390EE0>, message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       Symbols not available. Dumping unresolved backtrace:
+E       	0x7ff7368788d5
+E       	0x7ff736878930
+E       	0x7ff73665165d
+E       	0x7ff7366a9a33
+E       	0x7ff7366a9d3c
+E       	0x7ff7366fdf67
+E       	0x7ff7366fac97
+E       	0x7ff73669ac29
+E       	0x7ff73669ba93
+E       	0x7ff736b90620
+E       	0x7ff736b8af60
+E       	0x7ff736ba96c6
+E       	0x7ff736895dd4
+E       	0x7ff73689ed7c
+E       	0x7ff736881ff4
+E       	0x7ff7368821a5
+E       	0x7ff736867ed2
+E       	0x7fff9961e8d7
+E       	0x7fff9a7cc53c
+
+..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\wait.py:122: TimeoutException
+================================================================================
+
+================================================================================
+Test Failed: test_scenario_authoring_full_flow
+driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="5787eeb156810ff6c4e5ffd7467d2f17")>
+
+    @pytest.mark.e2e
+    def test_scenario_authoring_full_flow(driver):
+    
+        start_new_report()
+        task_id = 1
+    
+        # LOGIN
+        LoginPage(driver).login("user@gmail.com", "12345")
+    
+        write_test_report(
+            "Tower Track", "Web", "Login",
+            "Valid Login",
+            "Login with valid credentials",
+            "Enter username and password",
+            "User should login successfully",
+            "User logged in",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # NAVIGATION
+        SliderPage(driver).hover_and_click_scenario_authoring_tool()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights", "Navigation",
+            "Navigate to Scenario Authoring Tool",
+            "Open Scenario Authoring & Optimization Tool",
+            "Click Scenario Authoring card",
+            "Page should open",
+            "Page opened",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # PAGE VALIDATION
+        scenario_page = ScenarioAuthoringPage(driver)
+        scenario_page.validate_page_loaded()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights",
+            "Scenario Authoring & Optimization Tool",
+            "Verify Page Load",
+            "Ensure Scenario Authoring page loads correctly",
+            "Open Scenario Authoring tool",
+            "Scenario Authoring page should load",
+            "Page loaded successfully",
+            "Pass", "", task_id
+        )
+    
+        scenario_page.configure_sc_network_and_generate()
+    
+        scenario_page.switch_to_granular_view()
+>       scenario_page.select_granular_source_and_target()
+
+tests\test_scenario_authoring_flow.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages\scenario_authoring_page.py:512: in select_granular_source_and_target
+    Select(source_dropdown).select_by_value("DC-Chicago")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.select.Select object at 0x0000022BF3DC8DC0>, value = 'DC-Chicago'
+
+    def select_by_value(self, value: str) -> None:
+        """Select all options that have a value matching the argument.
+    
+        Example:
+            When given "foo" this would select an option like:
+    
+                `<option value="foo">Bar</option>`
+    
+        Args:
+            value: The value to match against
+    
+        Raises:
+            NoSuchElementException: If there is no option with specified value in SELECT
+        """
+        css = f"option[value ={self._escape_string(value)}]"
+        opts = self._el.find_elements(By.CSS_SELECTOR, css)
+        matched = False
+        for opt in opts:
+            self._set_selected(opt)
+            if not self.is_multiple:
+                return
+            matched = True
+        if not matched:
+>           raise NoSuchElementException(f"Cannot locate option with value: {value}")
+E           selenium.common.exceptions.NoSuchElementException: Message: Cannot locate option with value: DC-Chicago; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+
+..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\select.py:85: NoSuchElementException
+================================================================================
+
+================================================================================
+Test Failed: test_scenario_authoring_full_flow
+driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="a29bc2b8c707c381c51620f429f6198d")>
+
+    @pytest.mark.e2e
+    def test_scenario_authoring_full_flow(driver):
+    
+        start_new_report()
+        task_id = 1
+    
+        # LOGIN
+        LoginPage(driver).login("user@gmail.com", "12345")
+    
+        write_test_report(
+            "Tower Track", "Web", "Login",
+            "Valid Login",
+            "Login with valid credentials",
+            "Enter username and password",
+            "User should login successfully",
+            "User logged in",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # NAVIGATION
+        SliderPage(driver).hover_and_click_scenario_authoring_tool()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights", "Navigation",
+            "Navigate to Scenario Authoring Tool",
+            "Open Scenario Authoring & Optimization Tool",
+            "Click Scenario Authoring card",
+            "Page should open",
+            "Page opened",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # PAGE VALIDATION
+        scenario_page = ScenarioAuthoringPage(driver)
+        scenario_page.validate_page_loaded()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights",
+            "Scenario Authoring & Optimization Tool",
+            "Verify Page Load",
+            "Ensure Scenario Authoring page loads correctly",
+            "Open Scenario Authoring tool",
+            "Scenario Authoring page should load",
+            "Page loaded successfully",
+            "Pass", "", task_id
+        )
+    
+        scenario_page.configure_sc_network_and_generate()
+    
+        scenario_page.switch_to_granular_view()
+>       scenario_page.select_granular_source_and_target()
+
+tests\test_scenario_authoring_flow.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages\scenario_authoring_page.py:497: in select_granular_source_and_target
+    source_dropdown = self.wait.until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="a29bc2b8c707c381c51620f429f6198d")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x00000262A78F0EE0>, message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       Symbols not available. Dumping unresolved backtrace:
+E       	0x7ff7368788d5
+E       	0x7ff736878930
+E       	0x7ff73665165d
+E       	0x7ff7366a9a33
+E       	0x7ff7366a9d3c
+E       	0x7ff7366fdf67
+E       	0x7ff7366fac97
+E       	0x7ff73669ac29
+E       	0x7ff73669ba93
+E       	0x7ff736b90620
+E       	0x7ff736b8af60
+E       	0x7ff736ba96c6
+E       	0x7ff736895dd4
+E       	0x7ff73689ed7c
+E       	0x7ff736881ff4
+E       	0x7ff7368821a5
+E       	0x7ff736867ed2
+E       	0x7fff9961e8d7
+E       	0x7fff9a7cc53c
+
+..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\wait.py:122: TimeoutException
+================================================================================
+
+================================================================================
+Test Failed: test_scenario_authoring_full_flow
+driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="b9237dc445391770d02691d5c6249eb3")>
+
+    @pytest.mark.e2e
+    def test_scenario_authoring_full_flow(driver):
+    
+        start_new_report()
+        task_id = 1
+    
+        # LOGIN
+        LoginPage(driver).login("user@gmail.com", "12345")
+    
+        write_test_report(
+            "Tower Track", "Web", "Login",
+            "Valid Login",
+            "Login with valid credentials",
+            "Enter username and password",
+            "User should login successfully",
+            "User logged in",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # NAVIGATION
+        SliderPage(driver).hover_and_click_scenario_authoring_tool()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights", "Navigation",
+            "Navigate to Scenario Authoring Tool",
+            "Open Scenario Authoring & Optimization Tool",
+            "Click Scenario Authoring card",
+            "Page should open",
+            "Page opened",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # PAGE VALIDATION
+        scenario_page = ScenarioAuthoringPage(driver)
+        scenario_page.validate_page_loaded()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights",
+            "Scenario Authoring & Optimization Tool",
+            "Verify Page Load",
+            "Ensure Scenario Authoring page loads correctly",
+            "Open Scenario Authoring tool",
+            "Scenario Authoring page should load",
+            "Page loaded successfully",
+            "Pass", "", task_id
+        )
+    
+        scenario_page.configure_sc_network_and_generate()
+    
+        scenario_page.switch_to_granular_view()
+>       scenario_page.select_granular_source_and_target()
+
+tests\test_scenario_authoring_flow.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages\scenario_authoring_page.py:497: in select_granular_source_and_target
+    source_dropdown = self.wait.until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="b9237dc445391770d02691d5c6249eb3")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x000001ECFCD04EE0>, message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       Symbols not available. Dumping unresolved backtrace:
+E       	0x7ff7368788d5
+E       	0x7ff736878930
+E       	0x7ff73665165d
+E       	0x7ff7366a9a33
+E       	0x7ff7366a9d3c
+E       	0x7ff7366fdf67
+E       	0x7ff7366fac97
+E       	0x7ff73669ac29
+E       	0x7ff73669ba93
+E       	0x7ff736b90620
+E       	0x7ff736b8af60
+E       	0x7ff736ba96c6
+E       	0x7ff736895dd4
+E       	0x7ff73689ed7c
+E       	0x7ff736881ff4
+E       	0x7ff7368821a5
+E       	0x7ff736867ed2
+E       	0x7fff9961e8d7
+E       	0x7fff9a7cc53c
+
+..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\wait.py:122: TimeoutException
+================================================================================
+
+================================================================================
+Test Failed: test_scenario_authoring_full_flow
+driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="87d5c87919542b629a7e11135cb8c5ba")>
+
+    @pytest.mark.e2e
+    def test_scenario_authoring_full_flow(driver):
+    
+        start_new_report()
+        task_id = 1
+    
+        # LOGIN
+        LoginPage(driver).login("user@gmail.com", "12345")
+    
+        write_test_report(
+            "Tower Track", "Web", "Login",
+            "Valid Login",
+            "Login with valid credentials",
+            "Enter username and password",
+            "User should login successfully",
+            "User logged in",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # NAVIGATION
+        SliderPage(driver).hover_and_click_scenario_authoring_tool()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights", "Navigation",
+            "Navigate to Scenario Authoring Tool",
+            "Open Scenario Authoring & Optimization Tool",
+            "Click Scenario Authoring card",
+            "Page should open",
+            "Page opened",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # PAGE VALIDATION
+        scenario_page = ScenarioAuthoringPage(driver)
+        scenario_page.validate_page_loaded()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights",
+            "Scenario Authoring & Optimization Tool",
+            "Verify Page Load",
+            "Ensure Scenario Authoring page loads correctly",
+            "Open Scenario Authoring tool",
+            "Scenario Authoring page should load",
+            "Page loaded successfully",
+            "Pass", "", task_id
+        )
+    
+        scenario_page.configure_sc_network_and_generate()
+    
+        scenario_page.switch_to_granular_view()
+>       scenario_page.select_granular_source_and_target()
+
+tests\test_scenario_authoring_flow.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages\scenario_authoring_page.py:506: in select_granular_source_and_target
+    source_box = self.wait.until(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.wait.WebDriverWait (session="87d5c87919542b629a7e11135cb8c5ba")>
+method = <function element_to_be_clickable.<locals>._predicate at 0x000001BF089B0EE0>, message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -> T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            >>> from selenium.webdriver.common.by import By
+            >>> from selenium.webdriver.support.ui import WebDriverWait
+            >>> from selenium.webdriver.support import expected_conditions as EC
+            >>>
+            >>> # Wait until an element is visible on the page
+            >>> wait = WebDriverWait(driver, 10)
+            >>> element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            >>> print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() > end_time:
+                break
+            time.sleep(self._poll)
+>       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       Symbols not available. Dumping unresolved backtrace:
+E       	0x7ff7368788d5
+E       	0x7ff736878930
+E       	0x7ff73665165d
+E       	0x7ff7366a9a33
+E       	0x7ff7366a9d3c
+E       	0x7ff7366fdf67
+E       	0x7ff7366fac97
+E       	0x7ff73669ac29
+E       	0x7ff73669ba93
+E       	0x7ff736b90620
+E       	0x7ff736b8af60
+E       	0x7ff736ba96c6
+E       	0x7ff736895dd4
+E       	0x7ff73689ed7c
+E       	0x7ff736881ff4
+E       	0x7ff7368821a5
+E       	0x7ff736867ed2
+E       	0x7fff9961e8d7
+E       	0x7fff9a7cc53c
+
+..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\wait.py:122: TimeoutException
+================================================================================
+
+================================================================================
+Test Failed: test_scenario_authoring_full_flow
+driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="780f0aeb68dee4926ac1d9f4f915cb5a")>
+
+    @pytest.mark.e2e
+    def test_scenario_authoring_full_flow(driver):
+    
+        start_new_report()
+        task_id = 1
+    
+        # LOGIN
+        LoginPage(driver).login("user@gmail.com", "12345")
+    
+        write_test_report(
+            "Tower Track", "Web", "Login",
+            "Valid Login",
+            "Login with valid credentials",
+            "Enter username and password",
+            "User should login successfully",
+            "User logged in",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # NAVIGATION
+        SliderPage(driver).hover_and_click_scenario_authoring_tool()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights", "Navigation",
+            "Navigate to Scenario Authoring Tool",
+            "Open Scenario Authoring & Optimization Tool",
+            "Click Scenario Authoring card",
+            "Page should open",
+            "Page opened",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # PAGE VALIDATION
+        scenario_page = ScenarioAuthoringPage(driver)
+        scenario_page.validate_page_loaded()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights",
+            "Scenario Authoring & Optimization Tool",
+            "Verify Page Load",
+            "Ensure Scenario Authoring page loads correctly",
+            "Open Scenario Authoring tool",
+            "Scenario Authoring page should load",
+            "Page loaded successfully",
+            "Pass", "", task_id
+        )
+    
+        scenario_page.configure_sc_network_and_generate()
+    
+        scenario_page.switch_to_granular_view()
+>       scenario_page.select_granular_source_and_target()
+
+tests\test_scenario_authoring_flow.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pages\scenario_authoring_page.py:514: in select_granular_source_and_target
+    source_select.select_by_value("DC-Chicago")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <selenium.webdriver.support.select.Select object at 0x0000028715F43280>, value = 'DC-Chicago'
+
+    def select_by_value(self, value: str) -> None:
+        """Select all options that have a value matching the argument.
+    
+        Example:
+            When given "foo" this would select an option like:
+    
+                `<option value="foo">Bar</option>`
+    
+        Args:
+            value: The value to match against
+    
+        Raises:
+            NoSuchElementException: If there is no option with specified value in SELECT
+        """
+        css = f"option[value ={self._escape_string(value)}]"
+        opts = self._el.find_elements(By.CSS_SELECTOR, css)
+        matched = False
+        for opt in opts:
+            self._set_selected(opt)
+            if not self.is_multiple:
+                return
+            matched = True
+        if not matched:
+>           raise NoSuchElementException(f"Cannot locate option with value: {value}")
+E           selenium.common.exceptions.NoSuchElementException: Message: Cannot locate option with value: DC-Chicago; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception
+
+..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\selenium\webdriver\support\select.py:85: NoSuchElementException
+================================================================================
+
+================================================================================
+Test Failed: test_scenario_authoring_full_flow
+driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="d62974a56c73c5b41308991eccf1ffca")>
+
+    @pytest.mark.e2e
+    def test_scenario_authoring_full_flow(driver):
+    
+        start_new_report()
+        task_id = 1
+    
+        # LOGIN
+        LoginPage(driver).login("user@gmail.com", "12345")
+    
+        write_test_report(
+            "Tower Track", "Web", "Login",
+            "Valid Login",
+            "Login with valid credentials",
+            "Enter username and password",
+            "User should login successfully",
+            "User logged in",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # NAVIGATION
+        SliderPage(driver).hover_and_click_scenario_authoring_tool()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights", "Navigation",
+            "Navigate to Scenario Authoring Tool",
+            "Open Scenario Authoring & Optimization Tool",
+            "Click Scenario Authoring card",
+            "Page should open",
+            "Page opened",
+            "Pass", "", task_id
+        )
+        task_id += 1
+    
+        # PAGE VALIDATION
+        scenario_page = ScenarioAuthoringPage(driver)
+        scenario_page.validate_page_loaded()
+    
+        write_test_report(
+            "Tower Track", "Part Allocation Insights",
+            "Scenario Authoring & Optimization Tool",
+            "Verify Page Load",
+            "Ensure Scenario Authoring page loads correctly",
+            "Open Scenario Authoring tool",
+            "Scenario Authoring page should load",
+            "Page loaded successfully",
+            "Pass", "", task_id
+        )
+    
+        scenario_page.configure_sc_network_and_generate()
+    
+        scenario_page.switch_to_granular_view()
+>       scenario_page.select_granular_source_and_target()
+
+tests\test_scenario_authoring_flow.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pages.scenario_authoring_page.ScenarioAuthoringPage object at 0x00000236988A0460>
+
+    def select_granular_source_and_target(self):
+        print("🎯 Selecting Granular Source & Target nodes (REACT-SAFE FINAL)")
+    
+        # Ensure Granular page is really ready
+        self.wait.until(
+            EC.visibility_of_element_located(
+                (By.XPATH, "//h2[normalize-space()='Scenario Controls']")
+            )
+        )
+    
+        # =========================
+        # SOURCE NODE (JS CONTROL)
+        # =========================
+        source_select = self.wait.until(
+            EC.presence_of_element_located((
+                By.XPATH,
+                "//label[normalize-space()='Source Node :']/following-sibling::select"
+            ))
+        )
+    
+        self.driver.execute_script("""
+            arguments[0].value = 'DC-Chicago';
+            arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
+        """, source_select)
+    
+        time.sleep(1)
+    
+        selected_source = self.driver.execute_script(
+            "return arguments[0].value;", source_select
+        )
+>       assert selected_source == "DC-Chicago"
+E       AssertionError
+
+pages\scenario_authoring_page.py:523: AssertionError
+================================================================================

@@ -53,7 +53,9 @@ def test_scenario_authoring_full_flow(driver):
         "Page loaded successfully",
         "Pass", "", task_id
     )
-    scenario_page = ScenarioAuthoringPage(driver)
 
-    scenario_page.validate_page_loaded()
     scenario_page.configure_sc_network_and_generate()
+
+    scenario_page.switch_to_granular_view()
+    scenario_page.select_granular_source_and_target()
+    scenario_page.adjust_granular_sliders()

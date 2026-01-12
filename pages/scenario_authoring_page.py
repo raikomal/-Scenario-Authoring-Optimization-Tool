@@ -3,6 +3,8 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import Select
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -262,6 +264,312 @@ class ScenarioAuthoringPage:
 
             print(f"✅ Configuration slider {i + 1} set to {value}")
 
+    def verify_configuration_loaded(self):
+        print("🔎 Verifying Configuration & Solve content")
+
+        self.wait.until(
+            EC.visibility_of_element_located((
+                By.XPATH,
+                "//label[normalize-space()='Allocation Priority']"
+            ))
+        )
+
+        print("✅ Configuration & Solve UI confirmed")
+
+    def scroll_to_cost_breakdown_optimized(self):
+        print("⬇ Scrolling to Cost Breakdown (Optimized)")
+
+        # 🔑 Ensure charts exist first
+        self.wait_for_optimization_results()
+
+        header = self.wait.until(
+            EC.presence_of_element_located((
+                By.XPATH,
+                "//h2[contains(normalize-space(),'Cost Breakdown')]"
+            ))
+        )
+
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});",
+            header
+        )
+
+        time.sleep(1)
+        print("✅ Cost Breakdown (Optimized) visible")
+
+    def hover_cost_breakdown_chart(self):
+        print("🟡 Hovering Cost Breakdown bars")
+
+        bars = self.wait.until(
+            EC.presence_of_all_elements_located((
+                By.XPATH,
+                "//div[contains(@id,'highcharts')]//*[name()='path']"
+            ))
+        )
+
+        for bar in bars[:5]:  # limit to first few bars
+            self.driver.execute_script("""
+                arguments[0].dispatchEvent(
+                    new MouseEvent('mouseover', { bubbles: true })
+                );
+            """, bar)
+            time.sleep(0.4)
+
+        print("✅ Cost Breakdown hover completed")
+
+    def scroll_cost_breakdown_summary_and_return(self):
+        print("⬇ Scrolling to Cost Breakdown Summary")
+
+        summary = self.wait.until(
+            EC.visibility_of_element_located((
+                By.XPATH,
+                "//h2[normalize-space()='Cost Breakdown Summary']"
+            ))
+        )
+
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});",
+            summary
+        )
+
+        time.sleep(1)
+
+        print("⬆ Returning to Run Optimization")
+
+        run_btn = self.wait.until(
+            EC.visibility_of_element_located((
+                By.XPATH,
+                "//button[normalize-space()='Run Optimization']"
+            ))
+        )
+
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});",
+            run_btn
+        )
+
+        time.sleep(1)
+        print("✅ Returned to Run Optimization")
+
+    def scroll_configuration_container(self):
+        print("⬇ Scrolling Configuration & Solve container")
+
+        container = self.wait.until(
+            EC.presence_of_element_located((
+                By.XPATH,
+                "//div[contains(@class,'overflow-y-auto')]"
+            ))
+        )
+
+        self.driver.execute_script(
+            "arguments[0].scrollTop = arguments[0].scrollHeight",
+            container
+        )
+        time.sleep(1)
+
+        self.driver.execute_script(
+            "arguments[0].scrollTop = 0",
+            container
+        )
+
+        print("✅ Configuration container scroll completed")
+
+    def wait_for_optimization_results(self):
+        print("⏳ Waiting for Optimization results (charts)")
+
+        self.wait.until(
+            EC.presence_of_element_located((
+                By.XPATH,
+                "//div[contains(@id,'highcharts')]//*[name()='svg']"
+            ))
+        )
+
+        print("✅ Optimization charts rendered")
+
+    def hover_cost_breakdown_optimized(self):
+        print("🟡 Hovering Cost Breakdown (Optimized) bars — stable")
+
+        bars = self.wait.until(
+            EC.presence_of_all_elements_located((
+                By.XPATH,
+                "//div[contains(@id,'highcharts')]//*[name()='path' and contains(@class,'highcharts-point')]"
+            ))
+        )
+
+        actions = ActionChains(self.driver)
+
+        hover_count = min(4, len(bars))  # 🔑 allow up to 4 safely
+
+        for idx, bar in enumerate(bars[:hover_count], start=1):
+            actions.move_to_element(bar).pause(0.8).perform()
+            print(f"✅ Hovered bar {idx}")
+            time.sleep(0.5)
+
+        print("✅ Cost Breakdown hover sequence completed (Highcharts-safe)")
+
+    def scroll_edge_kpis_table_real(self):
+        print("⬇ Scrolling Edge KPIs table (REAL internal scroll)")
+
+        table_container = self.wait.until(
+            EC.presence_of_element_located((
+                By.XPATH,
+                "//h2[normalize-space()='Edge Kpis']"
+                "/following::div[contains(@class,'overflow-y-auto')][1]"
+            ))
+        )
+
+        # Bring table into view
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});",
+            table_container
+        )
+        time.sleep(0.8)
+
+        # 🔑 REAL internal scrolling
+        for step in range(4):
+            self.driver.execute_script(
+                "arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].clientHeight;",
+                table_container
+            )
+            print(f"➡ KPI scroll step {step + 1}")
+            time.sleep(0.7)
+
+        print("✅ Edge KPIs table ACTUALLY scrolled internally")
+
+        scroll_pos = self.driver.execute_script(
+            "return arguments[0].scrollTop;",
+            table_container
+        )
+        assert scroll_pos > 0, "❌ Edge KPIs table did NOT scroll internally"
+
+    def stabilize_view_after_hover(self):
+        print("🧘 Stabilizing view after hover")
+
+        self.driver.execute_script("""
+            const x = window.scrollX;
+            const y = window.scrollY;
+            window.scrollTo(x, y);
+        """)
+
+        time.sleep(1)  # allow layout to settle
+
+    def switch_to_granular_view(self):
+        print("⬆ Preparing to switch to Granular View")
+
+        # ✅ 1. If already in Granular View, SKIP
+        current_url = self.driver.current_url
+        if "granule_view" in current_url:
+            print("ℹ Already in Granular View — skipping toggle click")
+            return
+
+        # 2️⃣ Scroll to top (visual safety)
+        self.driver.execute_script("window.scrollTo(0, 0);")
+        time.sleep(0.5)
+
+        # 3️⃣ Find and click Granular View toggle
+        granular_btn = self.wait.until(
+            EC.presence_of_element_located((
+                By.XPATH,
+                "//button[normalize-space()='Granular View']"
+            ))
+        )
+
+        self.driver.execute_script("arguments[0].click();", granular_btn)
+        print("➡ Granular View clicked")
+
+        # 4️⃣ Wait for route change
+        self.wait.until(EC.url_contains("/granule_view"))
+        print("🌐 URL updated to /granule_view")
+
+        # 5️⃣ HARD page verification
+        self.wait.until(
+            EC.visibility_of_element_located((
+                By.XPATH,
+                "//h2[normalize-space()='Scenario Controls']"
+            ))
+        )
+        print("✅ Granular View fully loaded and ready")
+
+    def select_granular_source_and_target(self):
+        print("🎯 Selecting Granular Source & Target nodes (FINAL WORKING FIX)")
+
+        # Ensure Granular page is ready
+        self.wait.until(
+            EC.visibility_of_element_located(
+                (By.XPATH, "//h2[normalize-space()='Scenario Controls']")
+            )
+        )
+
+        # =========================
+        # SOURCE NODE (DC-Chicago)
+        # =========================
+        source_select = self.wait.until(
+            EC.element_to_be_clickable((
+                By.XPATH,
+                "//label[normalize-space()='Source Node :']/following-sibling::select"
+            ))
+        )
+
+        Select(source_select).select_by_visible_text("DC-Chicago")
+        print("✅ Source Node selected: DC-Chicago")
+
+        time.sleep(1)  # IMPORTANT: allow Target options to refresh
+
+        # =========================
+        # TARGET NODE (Lane-West)
+        # =========================
+        target_select = self.wait.until(
+            EC.element_to_be_clickable((
+                By.XPATH,
+                "//label[normalize-space()='Target Node :']/following-sibling::select"
+            ))
+        )
+
+        Select(target_select).select_by_visible_text("Lane-West")
+        print("✅ Target Node selected: Lane-West")
+
+        time.sleep(1)  # IMPORTANT: allow charts + data to load
+
+        # =========================
+        # SCROLL TO GENERATED DATA
+        # =========================
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});",
+            target_select
+        )
+
+        time.sleep(1)
+
+    def adjust_granular_sliders(self):
+        print("🎚 Adjusting Granular sliders (VISIBLE & STABLE)")
+
+        sliders = {
+            "OTIF Target": 0.98,
+            "Max Expedite (% of flow)": 0.21,
+            "Max Avg Lateness (periods)": 1.5,
+            "Utilization Target": 0.96,
+            "Cost Pressure": 0.8
+        }
+
+        for label, value in sliders.items():
+            slider = self.wait.until(
+                EC.presence_of_element_located((
+                    By.XPATH,
+                    f"//label[contains(normalize-space(),'{label}')]/following::input[@type='range'][1]"
+                ))
+            )
+
+            self.driver.execute_script("""
+                arguments[0].value = arguments[1];
+                arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
+                arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
+            """, slider, value)
+
+            print(f"✅ {label} set to {value}")
+            time.sleep(0.3)
+
+        print("🎉 Granular sliders configured")
+
     # -------------------------------------------------
     # MAIN FLOW
     # -------------------------------------------------
@@ -297,9 +605,28 @@ class ScenarioAuthoringPage:
         self.wait.until(EC.element_to_be_clickable(L.TOPOLOGY_VIEW_BTN)).click()
         print("🔁 Returned to Topology View")
 
-        print("🔒 Phase 1 complete — visualization stable")
+        print("Phase 1 complete — visualization stable")
         # ---- Phase 2 : Configuration ----
         self.run_optimization_and_wait_for_config()
+        self.verify_configuration_loaded()
 
         self.set_configuration_sliders([0.4, 0.3, 0.3, 0.3])
+
+        self.scroll_configuration_container()
+        # Cost Breakdown section
+        self.scroll_to_cost_breakdown_optimized()
+        self.hover_cost_breakdown_optimized()
+        self.stabilize_view_after_hover()
+
+        # Edge KPIs LAST
+        self.scroll_edge_kpis_table_real()
+
+        self.switch_to_granular_view()
+
+
+
+
+
+
+
 
