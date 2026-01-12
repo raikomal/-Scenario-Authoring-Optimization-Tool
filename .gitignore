@@ -2,13 +2,13 @@
 __pycache__/
 *.pyc
 
-# Pytest cache
+# Pytest
 .pytest_cache/
 
 # Reports & logs
+reports/
 ui_test_report_*.csv
 ui_failures.log
 
-# Temp accidental files
-pytest
-raise
+# Virtual env
+.venv/
