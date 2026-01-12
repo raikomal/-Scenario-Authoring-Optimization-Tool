@@ -3,80 +3,88 @@ import os
 from datetime import datetime
 
 REPORT_FILE = None
+TASK_COUNTER = 0
 
 
 def start_new_report():
-    """
-    Starts a fresh CSV report for each pytest run
-    """
-    global REPORT_FILE
+    global REPORT_FILE, TASK_COUNTER
+    TASK_COUNTER = 0
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    REPORT_FILE = f"ui_test_report_{timestamp}.csv"
 
-    with open(REPORT_FILE, mode="w", newline="", encoding="utf-8") as file:
+    base_reports = os.path.join(os.getcwd(), "reports")
+    csv_dir = os.path.join(base_reports, "csv")
+
+    os.makedirs(csv_dir, exist_ok=True)
+
+    REPORT_FILE = os.path.join(
+        csv_dir,
+        f"ui_test_report_{timestamp}.csv"
+    )
+
+    with open(REPORT_FILE, "w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow([
-            "Product",
-            "Module",
-            "Feature",
-            "Test Case",
+            "Project",
+            "Application",
+            "Micro_Application",
+            "Title",
             "Description",
             "Steps",
-            "Expected Result",
-            "Actual Result",
+            "Expected_Result",
+            "Actual_Result",
             "Status",
-            "Remarks",
-            "Task ID"
+            "Remark",
+            "Task_ID"
         ])
 
     print(f"📄 New report started: {REPORT_FILE}")
 
 
 def write_test_report(
-    product,
-    module,
-    feature,
-    test_case,
+    project,
+    application,
+    micro_application,
+    title,
     description,
     steps,
-    expected,
-    actual,
+    expected_result,
+    actual_result,
     status,
-    remarks,
-    task_id
+    remark
 ):
-    """
-    Appends a test result row into the active report
-    """
-    global REPORT_FILE
+    global REPORT_FILE, TASK_COUNTER
 
     if not REPORT_FILE:
-        raise Exception("❌ start_new_report() was not called before writing report")
+        raise Exception("start_new_report() not called")
 
-    with open(REPORT_FILE, mode="a", newline="", encoding="utf-8") as file:
+    TASK_COUNTER += 1
+
+    with open(REPORT_FILE, "a", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow([
-            product,
-            module,
-            feature,
-            test_case,
+            project,
+            application,
+            micro_application,
+            title,
             description,
             steps,
-            expected,
-            actual,
+            expected_result,
+            actual_result,
             status,
-            remarks,
-            task_id
+            remark,
+            TASK_COUNTER
         ])
 
 
 def write_fail_report(title, error_message):
-    """
-    Writes failure details in a separate fail log
-    """
-    with open("ui_failures.log", "a", encoding="utf-8") as file:
-        file.write("\n" + "=" * 80 + "\n")
-        file.write(f"{title}\n")
-        file.write(str(error_message))
-        file.write("\n" + "=" * 80 + "\n")
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    fail_dir = os.path.join(os.getcwd(), "reports", "failures")
+    os.makedirs(fail_dir, exist_ok=True)
+
+    filename = os.path.join(fail_dir, f"FAIL_{timestamp}.txt")
+
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(title + "\n\n")
+        f.write(error_message)
